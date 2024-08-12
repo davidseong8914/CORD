@@ -11,10 +11,10 @@ Servo leg7;
 Servo leg8;
 
 // Define initial angles for each leg
-int initialAngles[8] = {170, 31, 165, 0, 25, 170, 17, 179};
+int initialAngles[8] = {165, 36, 165, 5, 30, 165, 10, 174};
 
-// Define standby angles for each leg (0~3) add 45, (4~7) add 110 angle (leg 7 add extra 20) (leg 8 subtract extra 5)
-int standbyAngles[8] = {125, 76, 120, 45, 135, 60, 147, 64};
+// Define standby angles for each leg (0~3) add 45, (4~7) add 110 angle (leg 8 subtract extra 5)
+int standbyAngles[8] = {125, 76, 125, 45, 135, 60, 115, 64};
 
 // Function to gradually move a servo to a target angle
 void moveServoSmooth(Servo &servo, int startAngle, int endAngle) {
@@ -36,12 +36,12 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   for (int i = 0; i < 3; i++) {
     digitalWrite(LED_BUILTIN, HIGH);
-    delay(1000);
+    delay(500);
     digitalWrite(LED_BUILTIN, LOW);
-    delay(1000);
+    delay(500);
   }
 
-    // Attach each servo to its corresponding pin
+  // Attach each servo to its corresponding pin
   leg1.attach(2);
   leg1.write(initialAngles[0]);
 
@@ -66,17 +66,11 @@ void setup() {
   leg8.attach(9);
   leg8.write(initialAngles[7]);
 
-  // Blink the built-in LED 3 times fast
-  for (int i = 0; i <3 ; i++){
-    digitalWrite(LED_BUILTIN, HIGH);
-    delay(500);
-    digitalWrite(LED_BUILTIN, LOW);
-    delay(500);
-  }
+  delay(300);
 
-  // Move all servos to the standby positions simultaneously
+  // Move servos for legs 1 to 4 to the standby positions
   int maxSteps = 0;
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < 4; i++) {
     int steps = abs(standbyAngles[i] - initialAngles[i]);
     if (steps > maxSteps) {
       maxSteps = steps;
@@ -96,6 +90,19 @@ void setup() {
     if (step <= abs(standbyAngles[3] - initialAngles[3])) {
       leg4.write(map(step, 0, abs(standbyAngles[3] - initialAngles[3]), initialAngles[3], standbyAngles[3]));
     }
+    delay(15);  // Adjust the delay for speed (smaller value = faster movement)
+  }
+
+  // Move servos for legs 5 to 8 to the standby positions
+  maxSteps = 0;
+  for (int i = 4; i < 8; i++) {
+    int steps = abs(standbyAngles[i] - initialAngles[i]);
+    if (steps > maxSteps) {
+      maxSteps = steps;
+    }
+  }
+
+  for (int step = 0; step <= maxSteps; step++) {
     if (step <= abs(standbyAngles[4] - initialAngles[4])) {
       leg5.write(map(step, 0, abs(standbyAngles[4] - initialAngles[4]), initialAngles[4], standbyAngles[4]));
     }
