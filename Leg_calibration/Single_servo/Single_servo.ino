@@ -4,15 +4,15 @@ Servo servo;
 int angle;
 
 void setup() {
-  servo.attach(0);
-  servo.write(angle);
+  servo.attach(2);
+  servo.write(5);
 }
 
 void loop() 
 { 
-  angle = 171;
-  servo.write(angle);
-  delay(10);
+  // angle = 171;
+  // servo.write(angle);
+  // delay(10);
 
 }
 
