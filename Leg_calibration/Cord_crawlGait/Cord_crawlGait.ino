@@ -1,5 +1,6 @@
 #include <Servo.h>
 
+// initialize the servos
 Servo leg1;
 Servo leg2;
 Servo leg3;
@@ -9,40 +10,75 @@ Servo leg6;
 Servo leg7;
 Servo leg8;
 
-// reduce 10 angles each for better gait
-int standAngles[8] = {135, 66, 135, 35, 125, 70, 105, 74};
+// CORD's initial angles
 
+// leg1: 170
+// leg2: 31
+// leg3: 165
+// leg4: 0
+// leg5: 25
+// leg6: 170
+// leg7: 17
+// leg8: 179
+
+// legs 1~4: 35 degree rotation for standing position
+// legs 5~8: 100 degree rotation for standing position (+ minor adjustments)
+
+// initialize standing angles
+int standAngles[8] = {135, 66, 130, 35, 125, 70, 105, 74};
+
+// Make CORD stand up
 void stand(Servo servos[], int standAngles[], int numServos) {
   bool movementComplete = false;
 
+  // initialize the initial angles of the servos
   int upperInitial[4] = {servos[0].read(), servos[1].read(), servos[2].read(), servos[3].read()};
   int lowerInitial[4] = {servos[4].read(), servos[5].read(), servos[6].read(), servos[7].read()};
 
+  // initialize the stand angles of the servos
   int upperStand[4] = {standAngles[0], standAngles[1], standAngles[2], standAngles[3]};
   int lowerStand[4] = {standAngles[4], standAngles[5], standAngles[6], standAngles[7]};
   
 
-  // Slowly move upper legs to stand position
-  for (int step = 0; step <= 100; step++) {
+// upper leg stand
+  while (!movementComplete) {
+    movementComplete = true;
     for (int i = 0; i < 4; i++) {
-      int angle = map(step, 0, 100, upperInitial[i], upperStand[i]);
-      servos[i].write(angle);
+      if (upperInitial[i] < upperStand[i]) {
+        upperInitial[i]++;
+        servos[i].write(upperInitial[i]);
+        movementComplete = false;
+      } else if (upperInitial[i] > upperStand[i]) {
+        upperInitial[i]--;
+        servos[i].write(upperInitial[i]);
+        movementComplete = false;
+      }
     }
-    delay(20);  // Adjust this delay to control the speed of movement
+    delay(20);
   }
 
-  // Slowly move lower legs to stand position
-  for (int step = 0; step <= 100; step++) {
+  movementComplete = false;
+
+  // lower leg stand
+  while (!movementComplete) {
+    movementComplete = true;
     for (int i = 0; i < 4; i++) {
-      int angle = map(step, 0, 100, lowerInitial[i], lowerStand[i]);
-      servos[i+4].write(angle);
+      if (lowerInitial[i] < lowerStand[i]) {
+        lowerInitial[i]++;
+        servos[i].write(lowerInitial[i]);
+        movementComplete = false;
+      } else if (lowerInitial[i] > lowerStand[i]) {
+        lowerInitial[i]--;
+        servos[i].write(lowerInitial[i]);
+        movementComplete = false;
+      }
     }
-    delay(20);  // Adjust this delay to control the speed of movement
+    delay(20);
   }
 
 }
 
-// Function to move a single leg (both upper and lower segments)
+// Moving 1 leg (upper and lower) - crawl gait
 void moveLeg(Servo &upperLeg, Servo &lowerLeg, bool upperClosertoZero, bool lowerClosertoZero, int currentUpper, int currentLower) {
 
   // move lower leg up
@@ -92,7 +128,10 @@ void setup() {
     stand(servos, standAngles, 8);
 
     // Implement the crawl gait
-    for (int step = 0; step < 3; step++) {
+    // leg move order: 4 -> 2 -> 3 -> 1
+    // repeat for n times
+    int n = 3;
+    for (int step = 0; step < n; step++) {
 
       // Move legs 4 and 8 (right back leg)
       moveLeg(leg4, leg8, true, true, standAngles[3], standAngles[7]);
@@ -108,7 +147,7 @@ void setup() {
 
     }
 
-    // Return to initial standby position
+    // Return to initial standing position
     for (int i = 0; i < 8; i++) {
       servos[i].write(standAngles[i]);
     }
@@ -116,5 +155,4 @@ void setup() {
 }
 
 void loop() {
-    // Nothing to do in loop
 }

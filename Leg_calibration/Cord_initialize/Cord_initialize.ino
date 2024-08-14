@@ -1,6 +1,6 @@
-#include <Servo.h>  // Include the Servo library
+#include <Servo.h> 
 
-// Create Servo objects for each leg
+// initialize servos
 Servo leg1;
 Servo leg2;
 Servo leg3;
@@ -32,7 +32,7 @@ void moveServoSmooth(Servo &servo, int startAngle, int endAngle) {
 }
 
 void setup() {
-  // Blink the built-in LED 3 times
+  // Blink LED 3 times to check if the program is running
   pinMode(LED_BUILTIN, OUTPUT);
   for (int i = 0; i < 3; i++) {
     digitalWrite(LED_BUILTIN, HIGH);
@@ -41,7 +41,7 @@ void setup() {
     delay(500);
   }
 
-  // Attach each servo to its corresponding pin
+  // Attach servo to corresponding pin
   leg1.attach(2);
   leg1.write(initialAngles[0]);
 
@@ -120,5 +120,4 @@ void setup() {
 }
 
 void loop() {
-  // Nothing to do in loop
 }
