@@ -1,8 +1,8 @@
 .DS_Store
 
-CAD/Arduino
-CAD/breadboard-power-rail
-CAD/sg90
+CAD/Arduino/
+CAD/breadboard-power-rail/
+CAD/sg90/
 
 # PALM 
 PALM
