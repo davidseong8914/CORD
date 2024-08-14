@@ -1,8 +1,14 @@
 .DS_Store
 
-CAD
+CAD/Arduino
+CAD/breadboard-power-rail
+CAD/sg90
 
-# PALM stuff
+# PALM 
 PALM
+3D_Print/PALM_
+
+# CORD
+3D_Print/CORD_/servo_arm_fit_test
 
 IMG_8980.JPG
