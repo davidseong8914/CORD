@@ -1,7 +1,7 @@
 # Cheap and Opensource Robot Dog (CORD)
 CORD is an open-source project that offers a starting point for those new to legged robotics or anyone seeking to build a dog robot, develop gait algorithms or contribute to a quadruped robot project. The robot's design and structure prioritize simplicity and cost-efficiency.
 
-### CORD v1.0 :
+## CORD v1.0 :
 #### 1. Goal
 Build a robot dog using only sg90 servos and an Arduino.
 
@@ -56,7 +56,6 @@ leg 7      leg 8
 ![alt text](Renders/CORD_real.jpg)
 
 #### 7. Moving Forward:
-Possible Additions:
 1. MG90s: Higher torque servos (13.6g;2.2kg/cm;10/27.59\$)
    1. SG90 (9g;1.6kg/cm;10/18.99\$)
 2. PCA9685: Servo Driver (scalable and organized servo control)
