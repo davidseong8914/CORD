@@ -79,7 +79,7 @@ void stand(Servo servos[], int standAngles[], int numServos) {
 }
 
 // Moving 1 leg (upper and lower) - crawl gait
-void moveLeg(Servo &upperLeg, Servo &lowerLeg, bool upperClosertoZero, bool lowerClosertoZero, int currentUpper, int currentLower) {
+void crawl(Servo &upperLeg, Servo &lowerLeg, bool upperClosertoZero, bool lowerClosertoZero, int currentUpper, int currentLower) {
 
   // move lower leg up
   if (lowerClosertoZero) {
@@ -134,16 +134,16 @@ void setup() {
     for (int step = 0; step < n; step++) {
 
       // Move legs 4 and 8 (right back leg)
-      moveLeg(leg4, leg8, true, true, standAngles[3], standAngles[7]);
+      crawl(leg4, leg8, true, true, standAngles[3], standAngles[7]);
 
       // Move legs 2 and 6 (right front leg)
-      moveLeg(leg2, leg6, true, true, standAngles[1], standAngles[5]);
+      crawl(leg2, leg6, true, true, standAngles[1], standAngles[5]);
 
       // Move legs 3 and 7 (left back leg)
-      moveLeg(leg3, leg7, false, false, standAngles[2], standAngles[6]);
+      crawl(leg3, leg7, false, false, standAngles[2], standAngles[6]);
 
       // Move legs 1 and 5 (left front leg)
-      moveLeg(leg1, leg5, false, false, standAngles[0], standAngles[4]);
+      crawl(leg1, leg5, false, false, standAngles[0], standAngles[4]);
 
     }
 
